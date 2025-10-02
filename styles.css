@@ -62,7 +62,7 @@ html::before {
 }
 
 .navbar-item, .navbar-link {
-  color: rgba(255, 255, 255, 0.95) !important;
+  color: rgba(0, 0, 0, 0.95) !important;
   font-weight: 600;
   transition: all var(--glh-transition);
 }
