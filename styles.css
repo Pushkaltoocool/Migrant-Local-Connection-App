@@ -81,15 +81,14 @@ html::before {
 .title {
   letter-spacing: -0.5px;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: rgb(0, 0, 0);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .subtitle {
   letter-spacing: 0.3px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(88, 88, 88, 0.9);
   font-weight: 500;
 }
 
