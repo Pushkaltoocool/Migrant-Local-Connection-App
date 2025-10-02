@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vouchers • Guess Lah!</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="has-navbar-fixed-top">
+  <nav class="navbar is-fixed-top is-link">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="index.html"><strong>Guess Lah!</strong></a>
+      <a role="button" class="navbar-burger" data-target="navMenu">
+        <span></span><span></span><span></span>
+      </a>
+    </div>
+    <div id="navMenu" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="index.html">Home</a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item"><span id="userBadge" class="tag is-light">—</span></div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      <h1 class="title">🎁 Vouchers</h1>
+      <p class="subtitle">Spend your points to claim real-like vouchers. Pass the quiz to redeem; fail and you lose the points.</p>
+
+      <div class="box">
+        <div class="columns is-vcentered">
+          <div class="column">
+            <p><strong>Username:</strong> <span id="vUser">—</span></p>
+            <p><strong>Points:</strong> <span id="vPoints">0</span></p>
+          </div>
+          <div class="column has-text-right">
+            <a href="index.html" class="button is-small is-light">← Back to Home</a>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="title is-5 mt-4">Available Vouchers</h2>
+      <div id="voucherList" class="columns is-multiline"></div>
+
+      <h2 class="title is-5 mt-5">Claimed Vouchers</h2>
+      <div id="claimedList" class="columns is-multiline"></div>
+    </div>
+  </section>
+
+  <!-- Quiz Modal -->
+  <div class="modal" id="quizModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Quick Check</p>
+        <button class="delete" aria-label="close" id="quizClose"></button>
+      </header>
+      <section class="modal-card-body">
+        <p id="quizIntro" class="mb-3">Answer these to claim your voucher.</p>
+        <div id="quizContainer"></div>
+        <p class="help is-danger mt-2" id="quizError"></p>
+      </section>
+      <footer class="modal-card-foot is-justify-content-space-between">
+        <button id="quizSubmit" class="button is-link">Submit</button>
+        <button id="quizCancel" class="button">Cancel</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="vouchers.js"></script>
+</body>
+</html>

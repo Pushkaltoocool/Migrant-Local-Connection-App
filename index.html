@@ -1,17 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="AI Migrant Worker Assistant - Chat and quiz application">
-    <title>AI Migrant Worker Assistant</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guess Lah!</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Firebase v9 compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
-<body>
-    <div class="App" id="app">
-        <!-- Content will be dynamically rendered here -->
+<body class="has-navbar-fixed-top">
+  <!-- Top Navbar -->
+  <nav class="navbar is-fixed-top is-primary" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="index.html"><strong>Guess Lah!</strong></a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
     </div>
-    <script src="app.js"></script>
+    <div id="navMenu" class="navbar-menu">
+      <div class="navbar-start">
+        <a id="navHome" class="navbar-item">Home</a>
+        <a class="navbar-item" href="vouchers.html">Vouchers</a>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <span class="button is-light is-static is-size-7" id="navUser">—</span>
+            <a id="navLogout" class="button is-light">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Entry Page -->
+  <section id="entryPage" class="section is-fullheight-with-navbar">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-12-mobile is-8-tablet is-5-desktop">
+          <div class="box">
+            <h1 class="title has-text-centered">Guess Lah!</h1>
+            <p class="subtitle has-text-centered">Anonymous, respectful guessing game</p>
+            <div class="field">
+              <label class="label">Unique Username</label>
+              <div class="control">
+                <input id="entryName" class="input" type="text" placeholder="e.g. sunny-kite-23">
+              </div>
+              <p id="nameError" class="help is-danger"></p>
+            </div>
+            <div class="field">
+              <label class="label">I am…</label>
+              <div class="control">
+                <div class="select is-fullwidth">
+                  <select id="entryProfile">
+                    <option value="local">Local</option>
+                    <option value="migrant">Migrant</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button id="enterBtn" class="button is-primary is-fullwidth is-medium">Enter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Home Page -->
+  <section id="homePage" class="section is-hidden is-fullheight-with-navbar">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-12-mobile is-10-tablet is-7-desktop">
+          <div class="box">
+            <div class="has-text-centered">
+              <h2 class="title is-4">Welcome, <span id="displayName">—</span></h2>
+              <p>Profile: <span id="displayProfile">—</span></p>
+              <p>Points: <span id="displayPoints">0</span></p>
+              <p class="mt-2"><a class="button is-link is-light is-small" href="vouchers.html">🎁 Spend points on vouchers</a></p>
+            </div>
+            <div class="columns is-variable is-2 mt-4">
+              <div class="column has-text-centered">
+                <p class="heading">Online</p>
+                <p class="title is-4" id="onlineCount">0</p>
+              </div>
+              <div class="column has-text-centered">
+                <p class="heading">Matchmaking</p>
+                <p class="title is-4" id="queueCount">0</p>
+              </div>
+            </div>
+            <div class="mt-4 buttons is-centered is-flex is-flex-direction-column is-align-items-stretch">
+              <button id="challengeBtn" class="button is-danger is-medium is-fullwidth">🎯 Challenge</button>
+              <button id="cancelBtn" class="button is-light is-medium is-fullwidth is-hidden mt-2">Cancel</button>
+              <button id="offlineBtn" class="button is-warning is-medium is-fullwidth mt-2">⚡ Offline Mode</button>
+              <div id="loadingSpinner" class="mt-3 is-hidden has-text-centered">
+                <button class="button is-info is-loading">Matching…</button>
+              </div>
+            </div>
+          </div>
+          <p class="has-text-grey is-size-7 has-text-centered">Tip: open in two different browsers to test real matchmaking.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Match Page -->
+  <section id="matchPage" class="section is-hidden is-fullheight-with-navbar">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-12-mobile is-11-tablet is-8-desktop">
+          <div class="box">
+            <div id="offlineBanner" class="notification is-warning is-hidden">⚠ Playing in Offline Mode (vs AI)</div>
+            <div class="level">
+              <div class="level-left">
+                <div>
+                  <p class="heading">Room</p>
+                  <p id="roomIdDisplay" class="title is-6">—</p>
+                </div>
+              </div>
+              <div class="level-right">
+                <div>
+                  <p class="heading">Role</p>
+                  <p id="roleDisplay" class="title is-6">—</p>
+                </div>
+              </div>
+            </div>
+            <progress id="timerBar" class="progress is-danger" value="30" max="30">30s</progress>
+            <div id="chatArea" class="box chat-area"></div>
+            <div id="askerControls" class="field is-grouped">
+              <div class="control is-expanded">
+                <input id="chatInput" class="input" type="text" placeholder="Ask a question…">
+              </div>
+              <div class="control">
+                <button id="sendBtn" class="button is-primary">Send</button>
+              </div>
+            </div>
+            <div id="yesnoControls" class="buttons is-hidden">
+              <button id="btnYes" class="button is-success is-fullwidth">Yes</button>
+              <button id="btnNo" class="button is-danger is-fullwidth">No</button>
+            </div>
+            <div class="buttons is-centered mt-3">
+              <button id="guessMigrant" class="button is-warning">They are MIGRANT</button>
+              <button id="guessLocal" class="button">They are LOCAL</button>
+            </div>
+            <div id="resultBanner" class="notification is-hidden"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+  <script>
+    // Bulma burger
+    document.addEventListener('DOMContentLoaded', () => {
+      const $burger = document.querySelector('.navbar-burger');
+      const $menu = document.getElementById('navMenu');
+      if ($burger && $menu) {
+        $burger.addEventListener('click', () => {
+          $burger.classList.toggle('is-active');
+          $menu.classList.toggle('is-active');
+        });
+      }
+    });
+  </script>
 </body>
 </html>

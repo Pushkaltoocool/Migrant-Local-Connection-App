@@ -1,528 +1,296 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+/* ==========================================================================
+   Guess Lah! — Minimalist UI Skin (drop-in CSS only)
+   - Rounded, soft, modern feel
+   - Smooth micro-interactions + animations
+   - Mobile-friendly polish (no markup changes required)
+   - Works alongside Bulma (no class renames)
+   ========================================================================== */
+
+/* ---------- CSS Variables (theme) ---------- */
+:root {
+  --glh-bg: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+  --glh-card-bg: #ffffff;
+  --glh-primary: #4f46e5;      /* indigo-600 */
+  --glh-primary-weak: #eef2ff; /* indigo-50 */
+  --glh-accent: #22c55e;       /* green-500 */
+  --glh-warn: #f59e0b;         /* amber-500 */
+  --glh-danger: #ef4444;       /* red-500 */
+  --glh-info: #0ea5e9;         /* sky-500 */
+  --glh-muted: #6b7280;        /* gray-500 */
+  --glh-soft-shadow: 0 10px 30px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+  --glh-soft-shadow-sm: 0 6px 18px rgba(0,0,0,.05), 0 1px 4px rgba(0,0,0,.04);
+  --glh-radius: 16px;
+  --glh-radius-sm: 12px;
+  --glh-radius-lg: 22px;
+  --glh-transition: 220ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* ---------- Global base ---------- */
+html, body {
+  background: var(--glh-bg);
+  min-height: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.section, .box, .card, .navbar, .modal-card, .progress, .input, .select select, .button, .tag {
+  border-radius: var(--glh-radius) !important;
 }
 
-.App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+.navbar {
+  box-shadow: var(--glh-soft-shadow);
 }
 
-.username-container {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  text-align: center;
+/* Subtle fade-in for sections/cards */
+.section, .box, .card {
+  animation: glh-fade 420ms ease-out both;
 }
 
-.username-container h1 {
-  margin: 0 0 10px 0;
-  color: #333;
+/* ---------- Typography ---------- */
+.title, .subtitle {
+  letter-spacing: .2px;
+}
+.heading { color: var(--glh-muted); }
+
+/* ---------- Containers / Cards ---------- */
+.box, .card {
+  background: var(--glh-card-bg);
+  box-shadow: var(--glh-soft-shadow);
+  border: 1px solid rgba(15,23,42,.06);
 }
 
-.subtitle {
-  margin: 0 0 20px 0;
-  color: #666;
-  font-size: 14px;
-}
-
-.username-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  box-sizing: border-box;
-  transition: border-color 0.3s;
-}
-
-.username-input:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-.username-button {
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.username-button:hover {
+.card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(0,0,0,.08), 0 3px 10px rgba(0,0,0,.05);
+  transition: transform var(--glh-transition), box-shadow var(--glh-transition);
 }
 
-.chat-container {
-  width: 90%;
-  max-width: 800px;
-  height: 600px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
+/* ---------- Inputs & Selects ---------- */
+.input, .select select {
+  border: 2px solid rgba(15,23,42,.08);
+  padding: 0.85rem 1rem;
+  transition: border-color var(--glh-transition), box-shadow var(--glh-transition), transform var(--glh-transition);
+}
+
+.input:focus, .select select:focus {
+  border-color: var(--glh-primary);
+  box-shadow: 0 0 0 6px rgba(79,70,229,.12);
+  transform: translateZ(0); /* GPU kick */
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  border: none;
+  border-radius: var(--glh-radius);
+  padding: 0.85rem 1rem;
+  font-weight: 600;
+  letter-spacing: .2px;
+  transition: transform var(--glh-transition), box-shadow var(--glh-transition), filter var(--glh-transition);
+  box-shadow: var(--glh-soft-shadow-sm);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.05);
+  filter: brightness(1.02);
+}
+.button:active {
+  transform: translateY(0);
+}
+
+.button.is-primary { background: var(--glh-primary); }
+.button.is-danger  { background: var(--glh-danger); }
+.button.is-warning { background: var(--glh-warn); color: #111827; }
+.button.is-info    { background: var(--glh-info); }
+.button.is-light   { background: #f3f4f6; color: #111827; }
+
+.card-footer-item {
+  transition: background-color var(--glh-transition);
+  border-radius: 0 0 var(--glh-radius) var(--glh-radius);
+}
+.card-footer-item:hover {
+  background: rgba(79,70,229,.08);
+}
+
+/* ---------- Navbar small enhancements ---------- */
+.navbar .button.is-light.is-static {
+  background: var(--glh-primary-weak);
+  color: #4338ca; /* indigo-700 */
+  box-shadow: none;
+}
+
+/* ---------- Progress (timer) ---------- */
+.progress {
+  height: 12px;
   overflow: hidden;
+  background: rgba(15,23,42,.06);
+  position: relative;
+}
+.progress::-webkit-progress-bar {
+  background: transparent;
+}
+.progress::-webkit-progress-value {
+  background: linear-gradient(90deg, #ef4444 0%, #f59e0b 100%);
+  border-radius: var(--glh-radius);
+  transition: width 1s linear;
+}
+.progress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(transparent 60%, rgba(255,255,255,.25) 61%);
+  opacity: .2;
+  pointer-events: none;
 }
 
-.chat-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.chat-header h2 {
-  margin: 0;
-}
-
-.username-display {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-.messages-container {
-  flex: 1;
-  padding: 20px;
+/* ---------- Chat area ---------- */
+.chat-area {
+  height: calc(62vh - 140px);
   overflow-y: auto;
-  background: #f5f5f5;
+  background: #f8fafc;
+  border: 1px solid rgba(15,23,42,.06);
+  border-radius: var(--glh-radius);
+  padding: .75rem;
+  scroll-behavior: smooth;
 }
 
-.no-messages {
-  text-align: center;
-  color: #999;
-  margin-top: 100px;
+/* Smooth scrollbars (webkit) */
+.chat-area::-webkit-scrollbar { width: 10px; }
+.chat-area::-webkit-scrollbar-track { background: transparent; }
+.chat-area::-webkit-scrollbar-thumb {
+  background: rgba(15,23,42,.12);
+  border-radius: 10px;
 }
 
+/* Messages */
 .message {
-  margin-bottom: 15px;
-  padding: 12px;
-  border-radius: 8px;
-  max-width: 70%;
-  animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.own-message {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  margin-left: auto;
-}
-
-.other-message {
-  background: white;
-  color: #333;
-  margin-right: auto;
-}
-
-.message-header {
+  margin-bottom: .65rem;
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  font-size: 12px;
-  opacity: 0.8;
 }
-
-.message-sender {
-  font-weight: 600;
-}
-
-.message-time {
-  font-size: 11px;
-}
-
-.message-text {
+.message .bubble {
+  display: inline-block;
+  padding: .6rem .85rem;
+  border-radius: 16px;
+  max-width: 90%;
   word-wrap: break-word;
+  line-height: 1.25;
+  transform-origin: bottom;
+  animation: glh-pop .22s ease-out both;
 }
 
-.message-form {
-  display: flex;
-  padding: 20px;
-  background: white;
-  border-top: 1px solid #e0e0e0;
+.message.me {
+  justify-content: flex-end;
+}
+.message.me .bubble {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(79,70,229,.25);
+}
+.message.other .bubble {
+  background: #ffffff;
+  border: 1px solid rgba(15,23,42,.08);
+  color: #111827;
+  box-shadow: 0 6px 14px rgba(0,0,0,.06);
 }
 
-.message-input {
-  flex: 1;
-  padding: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  margin-right: 10px;
-  transition: border-color 0.3s;
+/* ---------- Role segments ---------- */
+#askerControls, #yesnoControls {
+  margin-top: .75rem;
+}
+#askerControls .input {
+  border-radius: var(--glh-radius);
+}
+#askerControls .button {
+  border-radius: var(--glh-radius);
 }
 
-.message-input:focus {
-  outline: none;
-  border-color: #667eea;
+/* ---------- Result banner ---------- */
+#resultBanner {
+  border-radius: var(--glh-radius);
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+  border: 1px solid rgba(79,70,229,.2);
+  color: #1f2937;
+  box-shadow: var(--glh-soft-shadow);
+  animation: glh-slide-up 360ms var(--glh-transition) both;
 }
 
-.send-button {
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+/* ---------- Offline banner ---------- */
+#offlineBanner {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid rgba(245,158,11,.3);
+}
+
+/* ---------- Voucher page cards ---------- */
+.card .card-header {
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
+}
+.card .card-header-title {
+  font-weight: 700;
+}
+.card .tag {
+  border-radius: 999px !important;
 }
 
-.send-button:hover {
-  transform: translateY(-2px);
+/* ---------- Loading / Matching hint ---------- */
+#loadingSpinner .button.is-loading {
+  border-radius: 999px;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
 }
 
-/* Quiz Styles */
-.quiz-container {
-  width: 90%;
-  max-width: 800px;
-  min-height: 600px;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
+/* ---------- Utility micro-animations ---------- */
+@keyframes glh-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.quiz-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 12px 12px 0 0;
+@keyframes glh-pop {
+  from { opacity: 0; transform: translateY(4px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.quiz-header h2 {
-  margin: 0;
+@keyframes glh-slide-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.nav-button {
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid white;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
+/* ---------- Hover lift for primary actions ---------- */
+#challengeBtn, #offlineBtn, #enterBtn {
+  will-change: transform;
 }
-
-.nav-button:hover {
-  background: rgba(255, 255, 255, 0.3);
+#challengeBtn:hover, #offlineBtn:hover, #enterBtn:hover {
   transform: translateY(-1px);
 }
 
-.quiz-content {
-  padding: 40px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.quiz-progress {
-  font-size: 14px;
-  color: #667eea;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.quiz-question {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 30px;
-  line-height: 1.4;
-}
-
-.quiz-options {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 30px;
-}
-
-.quiz-option {
-  padding: 15px 20px;
-  background: #f5f5f5;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.quiz-option:hover {
-  background: #ebebeb;
-  border-color: #667eea;
-}
-
-.quiz-option.selected {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border-color: #667eea;
-}
-
-.quiz-submit {
-  padding: 15px 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-  margin-top: auto;
-}
-
-.quiz-submit:hover:not(:disabled) {
-  transform: translateY(-2px);
-}
-
-.quiz-submit:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.quiz-results {
-  padding: 60px 40px;
-  text-align: center;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.result-title {
-  font-size: 48px;
-  margin: 0 0 20px 0;
-  font-weight: bold;
-}
-
-.result-title.passed {
-  color: #4caf50;
-}
-
-.result-title.failed {
-  color: #f44336;
-}
-
-.result-score {
-  font-size: 28px;
-  color: #333;
-  margin: 10px 0;
-}
-
-.result-percentage {
-  font-size: 36px;
-  font-weight: bold;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 10px 0 20px 0;
-}
-
-.result-message {
-  font-size: 18px;
-  color: #666;
-  margin: 20px 0 40px 0;
-  max-width: 500px;
-  line-height: 1.6;
-}
-
-.result-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-}
-
-.quiz-button {
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.quiz-button:hover {
-  transform: translateY(-2px);
-}
-
-/* Mobile Responsive Styles */
+/* ---------- Mobile tweaks ---------- */
 @media (max-width: 768px) {
-  .App {
-    padding: 10px;
+  .section.is-fullheight-with-navbar {
+    padding-top: 1.25rem;
   }
+  .chat-area {
+    height: calc(70vh - 160px);
+    padding: .6rem;
+  }
+  .button.is-medium {
+    font-size: 1rem;
+  }
+  .navbar .buttons .button {
+    padding: 0.55rem 0.75rem;
+  }
+}
 
-  .username-container {
-    padding: 30px 20px;
-    width: 90%;
-    max-width: 400px;
+/* ---------- Accessibility: respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
+}
 
-  .username-container h1 {
-    font-size: 24px;
-  }
-
-  .subtitle {
-    font-size: 13px;
-  }
-
-  .chat-container, .quiz-container {
-    width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
-  }
-
-  .chat-header, .quiz-header {
-    padding: 15px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .chat-header h2, .quiz-header h2 {
-    font-size: 18px;
-  }
-
-  .header-right {
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .username-display {
-    font-size: 12px;
-  }
-
-  .nav-button {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-
-  .messages-container {
-    padding: 15px;
-  }
-
-  .message {
-    max-width: 85%;
-    padding: 10px;
-  }
-
-  .message-header {
-    font-size: 11px;
-  }
-
-  .message-text {
-    font-size: 14px;
-  }
-
-  .message-form {
-    padding: 15px;
-  }
-
-  .message-input {
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .send-button {
-    padding: 10px 16px;
-    font-size: 14px;
-  }
-
-  .quiz-content {
-    padding: 20px;
-  }
-
-  .quiz-question {
-    font-size: 20px;
-    margin-bottom: 25px;
-  }
-
-  .quiz-option {
-    padding: 12px 15px;
-    font-size: 15px;
-  }
-
-  .quiz-submit {
-    padding: 12px 24px;
-    font-size: 15px;
-  }
-
-  .quiz-results {
-    padding: 40px 20px;
-  }
-
-  .result-title {
-    font-size: 36px;
-  }
-
-  .result-score {
-    font-size: 22px;
-  }
-
-  .result-percentage {
-    font-size: 28px;
-  }
-
-  .result-message {
-    font-size: 16px;
-  }
-
-  .result-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .quiz-button {
-    width: 100%;
-  }
+/* ---------- Subtle focus rings (keyboard users) ---------- */
+:focus-visible {
+  outline: 3px solid rgba(79,70,229,.35);
+  outline-offset: 2px;
+  border-radius: 12px;
 }
