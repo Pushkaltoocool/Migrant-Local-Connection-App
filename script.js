@@ -329,6 +329,11 @@ $('#sendBtn').onclick = () => {
 $('#btnYes').onclick = () => offlineMode ? sendMessageOffline('Yes') : sendMessageOnline('Yes');
 $('#btnNo').onclick  = () => offlineMode ? sendMessageOffline('No')  : sendMessageOnline('No');
 
+// function disableGuessButtons(){
+//   $('#guessMigrant').attr('disabled', true);
+//   $('#guessLocal').attr('disabled', true);
+// }
+
 $('#guessMigrant').onclick = () => offlineMode ? submitGuessOffline('migrant') : submitGuessOnline('migrant');
 $('#guessLocal').onclick   = () => offlineMode ? submitGuessOffline('local')   : submitGuessOnline('local');
 
