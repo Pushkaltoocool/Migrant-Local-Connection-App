@@ -336,8 +336,22 @@ function disableGuessButtons(){
   $('#guessLocal').disabled = true;
 }
 
-$('#guessMigrant').onclick = () => disableGuessButtons(); offlineMode ? submitGuessOffline('migrant') : submitGuessOnline('migrant');
-$('#guessLocal').onclick   = () => disableGuessButtons(); offlineMode ? submitGuessOffline('local')   : submitGuessOnline('local');
+$('#guessMigrant').onclick = () => {
+  disableGuessButtons();
+  if (offlineMode){
+    submitGuessOffline('migrant')
+  }else{
+    submitGuessOnline('migrant')
+  }
+};
+$('#guessLocal').onclick  = () => {
+  disableGuessButtons();
+  if(offlineMode){
+    submitGuessOffline('local')
+  }else{
+    submitGuessOnline('local')
+  }
+};
 
 // ---- Offline Mode (AI opponent always YES/NO role) ----
 $('#offlineBtn').onclick = () => {
