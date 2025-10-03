@@ -325,17 +325,19 @@ $('#sendBtn').onclick = () => {
   $('#chatInput').value='';
   if (offlineMode) sendMessageOffline(v);
   else sendMessageOnline(v);
+  $('#guessMigrant').disabled = false;
+  $('#guessLocal').disabled = false;
 };
 $('#btnYes').onclick = () => offlineMode ? sendMessageOffline('Yes') : sendMessageOnline('Yes');
 $('#btnNo').onclick  = () => offlineMode ? sendMessageOffline('No')  : sendMessageOnline('No');
 
-// function disableGuessButtons(){
-//   $('#guessMigrant').attr('disabled', true);
-//   $('#guessLocal').attr('disabled', true);
-// }
+function disableGuessButtons(){
+  $('#guessMigrant').disabled = true;
+  $('#guessLocal').disabled = true;
+}
 
-$('#guessMigrant').onclick = () => offlineMode ? submitGuessOffline('migrant') : submitGuessOnline('migrant');
-$('#guessLocal').onclick   = () => offlineMode ? submitGuessOffline('local')   : submitGuessOnline('local');
+$('#guessMigrant').onclick = () => disableGuessButtons(); offlineMode ? submitGuessOffline('migrant') : submitGuessOnline('migrant');
+$('#guessLocal').onclick   = () => disableGuessButtons(); offlineMode ? submitGuessOffline('local')   : submitGuessOnline('local');
 
 // ---- Offline Mode (AI opponent always YES/NO role) ----
 $('#offlineBtn').onclick = () => {
